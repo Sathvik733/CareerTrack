@@ -56,16 +56,18 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        session.clear()
+    session.clear()
 
+    if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
 
         user = User.query.filter_by(email=email).first()
 
         if user and bcrypt.check_password_hash(user.password, password):
+            session.clear()
             session['user_id'] = user.id
+            session['username'] = user.username
             return redirect(url_for('dashboard'))
         else:
             return "Invalid email or password"
@@ -82,26 +84,10 @@ def dashboard():
     ).all()
 
     total_jobs = len(jobs)
-
-    applied_jobs = len([
-        job for job in jobs
-        if job.status == 'Applied'
-    ])
-
-    interview_jobs = len([
-        job for job in jobs
-        if job.status == 'Interview'
-    ])
-
-    rejected_jobs = len([
-        job for job in jobs
-        if job.status == 'Rejected'
-    ])
-
-    offer_jobs = len([
-        job for job in jobs
-        if job.status == 'Offer'
-    ])
+    applied_jobs = len([job for job in jobs if job.status == 'Applied'])
+    interview_jobs = len([job for job in jobs if job.status == 'Interview'])
+    rejected_jobs = len([job for job in jobs if job.status == 'Rejected'])
+    offer_jobs = len([job for job in jobs if job.status == 'Offer'])
 
     return render_template(
         'dashboard.html',
@@ -110,7 +96,8 @@ def dashboard():
         applied_jobs=applied_jobs,
         interview_jobs=interview_jobs,
         rejected_jobs=rejected_jobs,
-        offer_jobs=offer_jobs
+        offer_jobs=offer_jobs,
+        username=session.get('username')
     )
 
 @app.route('/add-job', methods=['GET', 'POST'])
