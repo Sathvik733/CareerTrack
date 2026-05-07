@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h2 class="fw-bold">Job Applications 📋</h2>
+
+    <div>
+        <a href="/add-job" class="btn btn-primary me-2">
+            + Add Job
+        </a>
+
+        <a href="/logout" class="btn btn-danger">
+            Logout
+        </a>
+    </div>
+
+</div>
+
+<!-- Statistics Cards -->
+<div class="row mb-4">
+
+    <div class="col-md-3 mb-3">
+        <div class="card text-center shadow dashboard-card">
+            <div class="card-body">
+                <h6 class="text-muted">Total Applications</h6>
+                <h2 class="fw-bold">{{ total_jobs }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card text-center shadow dashboard-card border-info">
+            <div class="card-body">
+                <h6 class="text-muted">Interviews</h6>
+                <h2 class="fw-bold text-info">{{ interview_jobs }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card text-center shadow dashboard-card border-success">
+            <div class="card-body">
+                <h6 class="text-muted">Offers</h6>
+                <h2 class="fw-bold text-success">{{ offer_jobs }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card text-center shadow dashboard-card border-danger">
+            <div class="card-body">
+                <h6 class="text-muted">Rejected</h6>
+                <h2 class="fw-bold text-danger">{{ rejected_jobs }}</h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Jobs Table -->
+<div class="card shadow p-3">
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle">
+
+            <thead class="table-dark">
+                <tr>
+                    <th>Company</th>
+                    <th>Position</th>
+                    <th>Status</th>
+                    <th>Date Applied</th>
+                    <th>Link</th>
+                    <th>Notes</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for job in jobs %}
+
+                <tr>
+
+                    <td>{{ job.company }}</td>
+
+                    <td>{{ job.position }}</td>
+
+                    <td>
+                        {% if job.status == 'Applied' %}
+                            <span class="badge bg-secondary">
+                                Applied
+                            </span>
+
+                        {% elif job.status == 'Interview' %}
+                            <span class="badge bg-info">
+                                Interview
+                            </span>
+
+                        {% elif job.status == 'Rejected' %}
+                            <span class="badge bg-danger">
+                                Rejected
+                            </span>
+
+                        {% elif job.status == 'Offer' %}
+                            <span class="badge bg-success">
+                                Offer
+                            </span>
+
+                        {% endif %}
+                    </td>
+
+                    <td>{{ job.date_applied }}</td>
+
+                    <td>
+                        {% if job.job_link %}
+                            <a href="{{ job.job_link }}"
+                               target="_blank"
+                               class="btn btn-sm btn-outline-primary">
+                                View
+                            </a>
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
+
+                    <td>{{ job.notes }}</td>
+
+                    <td>
+                        <a href="/edit-job/{{ job.id }}"
+                           class="btn btn-sm btn-warning">
+                            Edit
+                        </a>
+
+                        <a href="/delete-job/{{ job.id }}"
+                           class="btn btn-sm btn-danger">
+                            Delete
+                        </a>
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

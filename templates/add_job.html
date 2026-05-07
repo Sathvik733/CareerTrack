@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-md-8">
+
+        <div class="card shadow p-4">
+
+            <h2 class="mb-4 text-center">
+                Add Job Application 🚀
+            </h2>
+
+            <form method="POST">
+
+                <div class="mb-3">
+                    <label class="form-label">Company Name</label>
+
+                    <input type="text"
+                           name="company"
+                           class="form-control"
+                           placeholder="Enter company name"
+                           required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Position</label>
+
+                    <input type="text"
+                           name="position"
+                           class="form-control"
+                           placeholder="Enter job position"
+                           required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Status</label>
+
+                    <select name="status"
+                            class="form-select"
+                            required>
+
+                        <option value="">Select Status</option>
+                        <option value="Applied">Applied</option>
+                        <option value="Interview">Interview</option>
+                        <option value="Rejected">Rejected</option>
+                        <option value="Offer">Offer</option>
+
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Date Applied</label>
+
+                    <input type="date"
+                           name="date_applied"
+                           class="form-control"
+                           required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Job Link</label>
+
+                    <input type="url"
+                           name="job_link"
+                           class="form-control"
+                           placeholder="Paste job link">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Notes</label>
+
+                    <textarea name="notes"
+                              class="form-control"
+                              rows="4"
+                              placeholder="Add notes here"></textarea>
+                </div>
+
+                <button type="submit"
+                        class="btn btn-primary w-100">
+
+                    Save Job
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-md-8">
+
+        <div class="card shadow p-4">
+
+            <h2 class="mb-4 text-center">
+                Edit Job Application ✏️
+            </h2>
+
+            <form method="POST">
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Company Name
+                    </label>
+
+                    <input type="text"
+                           name="company"
+                           class="form-control"
+                           value="{{ job.company }}"
+                           required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Position
+                    </label>
+
+                    <input type="text"
+                           name="position"
+                           class="form-control"
+                           value="{{ job.position }}"
+                           required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Status
+                    </label>
+
+                    <select name="status"
+                            class="form-select"
+                            required>
+
+                        <option value="Applied"
+                            {% if job.status == 'Applied' %}
+                                selected
+                            {% endif %}>
+                            Applied
+                        </option>
+
+                        <option value="Interview"
+                            {% if job.status == 'Interview' %}
+                                selected
+                            {% endif %}>
+                            Interview
+                        </option>
+
+                        <option value="Rejected"
+                            {% if job.status == 'Rejected' %}
+                                selected
+                            {% endif %}>
+                            Rejected
+                        </option>
+
+                        <option value="Offer"
+                            {% if job.status == 'Offer' %}
+                                selected
+                            {% endif %}>
+                            Offer
+                        </option>
+
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Date Applied
+                    </label>
+
+                    <input type="date"
+                           name="date_applied"
+                           class="form-control"
+                           value="{{ job.date_applied }}"
+                           required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Job Link
+                    </label>
+
+                    <input type="url"
+                           name="job_link"
+                           class="form-control"
+                           value="{{ job.job_link }}">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Notes
+                    </label>
+
+                    <textarea name="notes"
+                              class="form-control"
+                              rows="4">{{ job.notes }}</textarea>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit"
+                            class="btn btn-warning">
+
+                        Update Job
+
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
